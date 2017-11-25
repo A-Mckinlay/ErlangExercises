@@ -1,0 +1,1 @@
+-define(MODULE, module_info(module))
