@@ -1,1 +1,1 @@
-"# ErlangExercises" 
+# ErlangExercises
