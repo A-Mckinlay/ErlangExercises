@@ -1,7 +1,9 @@
 -module(mapreduce).
--export([example_go/0]).
+-export([start/3]).
 
-start(Module, Buckets, Map_Func, Reduce_Func) ->
+start(Module, Map_Func, Reduce_Func) ->
+  Buckets = read_in_data("./examples/hamlet.txt"),
+  io:format("In the start function length buckets: ~p~n", [Buckets]),
   Reduce_PID = spawn(Module, Reduce_Func, [length(Buckets), 0, [], self()]),
   Alph=[$a,$b,$c,$d,$e,$f,$g,$h,$i,$j,$k,$l,$m,$n,$o,$p,$q,$r,$s,$t,$u,$v,$w,$x,$y,$z],
   lists:foreach(fun(Bucket) -> spawn(Module, Map_Func, [Bucket, Alph, Reduce_PID, []]) end, Buckets),
@@ -11,14 +13,12 @@ start(Module, Buckets, Map_Func, Reduce_Func) ->
       Results
   end.
 
-example_go() ->
-start(mapreduce, read_in_data("war.txt"), map_bucket, reduce_results).
-
 read_in_data(Filename) ->
   {ok, BIN} = file:read_file(Filename),
-  List = string:to_lower(binary_to_list(BIN)),
-  Buckets = split(List, (length(List)/20)),
-  io:fwrite("Loaded and split~n"),
+  List =   string:lexemes(binary_to_list(string:lowercase(BIN)), "0123456789[]?,.--!()#;\\/*\":+%= " ++ [[$\r,$\n]]), %lowercases it, removes any non aplpahbet char's
+  Length = round(length(List) / 20),
+  Buckets = split(List, Length),
+  io:fwrite("Loaded and split ~n"),
   Buckets.
 
 map_bucket(Bucket, [], Reduce_PID, Results) -> Reduce_PID ! Results;
