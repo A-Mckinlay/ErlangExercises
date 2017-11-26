@@ -4,7 +4,7 @@
 read_data(File_Name) ->
   {ok, BIN} = file:read_file(File_Name),
   Raw_List = binary_to_list(BIN),
-  Clean_List = string:to_lower(re:replace(Raw_List, "[^a-zA-Z]", "", [global, {return, list}])), %if it's not an alpahbetical character get rid of it
+  Clean_List = string:to_lower(re:replace(Raw_List, "[^a-zA-Z]", "", [global, {return, list}])), %Remove all non-alphabetical characters
   Bucket_Size = round( length(Clean_List) / 20 ),
   Buckets = split(Clean_List, Bucket_Size),
   io:fwrite("Loaded, cleaned and split~n"),

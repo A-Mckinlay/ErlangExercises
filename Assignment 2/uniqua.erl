@@ -1,5 +1,5 @@
 -module(uniqua).
--export([run_set_example/0, run_comprehension_example/0, count_unique_entries/2]).
+-export([run_set_example/0, run_comprehension_example/0]).
 
 run_set_example() ->
   count_unique_entries_set_method([2,5,3,6,2,7,8,5,6]).

@@ -5,7 +5,7 @@ load(F)->
 {ok, Bin} = file:read_file(F),
    List=binary_to_list(Bin),
    Length=round(length(List)/20),
-   Ls=string:to_lower(re:replace(List, "[^a-zA-Z]", "", [global, {return, list}])), %if it's not an alpahbetical character get rid of it
+   Ls=string:to_lower(re:replace(List, "[^a-zA-Z]", "", [global, {return, list}])),  %Remove all non-alphabetical characters
    Sl=split(Ls,Length),
    io:fwrite("LOaded and Split~n"),
    Result=countsplit(Sl,[]),
