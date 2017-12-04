@@ -1,6 +1,6 @@
 -module(ccmapred).
 -export([begin_map_reduce/1, map_bucket/4, reduce_results/4]).
--import(ccharcount_helpers, [count/3, join/2, read_data/1]). %I have put some of the provided functions in another file to keep this file tidy while I worked. Slightly changed the load and split function.
+-import(ccharcount_helpers, [count/3, join/2, read_data/1]). %I have put some of the provided functions in another file to keep this file tidy while I worked. Slightly changed the load and split function. Please compile it to run this.
 
 begin_map_reduce(File_Name) ->
   Buckets = read_data(File_Name),
